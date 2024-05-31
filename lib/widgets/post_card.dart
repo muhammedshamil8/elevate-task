@@ -25,23 +25,23 @@ class PostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header location
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header location
+      
+          // Condition-based type UI
+          if (type == 'Guide')
+            _buildGuideUI(
+                imageUrls, username, name, title, location, description)
+          else if (type == 'Post')
+            _buildPostUI(imageUrls, description, username, location, time)
+          else
+            _buildDefaultUI(imageUrls, description),
 
-            // Condition-based type UI
-            if (type == 'Guide')
-              _buildGuideUI(
-                  imageUrls, username, name, title, location, description)
-            else if (type == 'Post')
-              _buildPostUI(imageUrls, description, username, location, time)
-            else
-              _buildDefaultUI(imageUrls, description),
-          ],
-        ),
+
+        ],
       ),
     );
   }
@@ -280,6 +280,7 @@ class PostCard extends StatelessWidget {
             ),
           ],
         ),
+        const Divider(thickness: 1, color: Color.fromARGB(255, 236, 234, 234))
       ],
     );
   }
