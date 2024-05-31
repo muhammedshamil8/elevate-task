@@ -36,9 +36,10 @@ class PostCard extends StatelessWidget {
             _buildGuideUI(
                 imageUrls, username, name, title, location, description)
           else if (type == 'Post')
-            _buildPostUI(imageUrls, description, username, location, time)
+            _buildPostUI(
+                context, imageUrls, description, username, location, time)
           else
-            _buildDefaultUI(imageUrls, description),
+            _buildDefaultUI(context, imageUrls, description),
         ],
       ),
     );
@@ -164,11 +165,11 @@ class PostCard extends StatelessWidget {
 
   //  Default UI elements
 
-  Widget _buildDefaultUI(List<String> imageUrls, String description) {
+  Widget _buildDefaultUI(context, List<String> imageUrls, String description) {
     return Column(
       children: [
         // Default UI elements
-        _buildImageLayout(imageUrls),
+        _buildImageLayout(context, imageUrls),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(description),
@@ -180,6 +181,7 @@ class PostCard extends StatelessWidget {
   // Post-specific UI elements
 
   Widget _buildPostUI(
+    BuildContext context,
     List<String> imageUrls,
     String description,
     String username, [
@@ -207,7 +209,7 @@ class PostCard extends StatelessWidget {
             ),
           ),
         // Post-specific UI elements
-        _buildImageLayout(imageUrls),
+        _buildImageLayout(context, imageUrls),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -291,9 +293,8 @@ class PostCard extends StatelessWidget {
     );
   }
 
-  //  Image layout based on the number of images
-
-  Widget _buildImageLayout(List<String> imageUrls) {
+//  Image layout based on the number of images
+  Widget _buildImageLayout(BuildContext context, List<String> imageUrls) {
     if (imageUrls.isEmpty) {
       return Container(); // Return an empty container if no images are provided
     } else if (imageUrls.length == 1) {
@@ -309,65 +310,87 @@ class PostCard extends StatelessWidget {
     } else if (imageUrls.length == 2) {
       // If two images, split the width equally
       return ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Row(
-            children: [
-              Expanded(
-                child: Image.asset(
-                  imageUrls[0],
-                  fit: BoxFit.cover,
-                  height: 200,
-                ),
+        borderRadius: BorderRadius.circular(20),
+        child: Row(
+          children: [
+            Expanded(
+              child: Image.asset(
+                imageUrls[0],
+                fit: BoxFit.cover,
+                height: 200,
               ),
-              Expanded(
-                child: Image.asset(
-                  imageUrls[1],
-                  fit: BoxFit.cover,
-                  height: 200,
-                ),
+            ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Image.asset(
+                imageUrls[1],
+                fit: BoxFit.cover,
+                height: 200,
               ),
-            ],
-          ));
+            ),
+          ],
+        ),
+      );
     } else {
       // If more than two images, split the width equally and show the first two images
       return ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: SizedBox(
-            height: 300, // Set a fixed height for the entire layout
-            child: Row(
-              children: [
-                Expanded(
+        borderRadius: BorderRadius.circular(20),
+        child: SizedBox(
+          height: 300, // Set a fixed height for the entire layout
+          child: Row(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 2 - 2,
+                height: 300,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),
+                  ),
                   child: Image.asset(
                     imageUrls[0],
                     fit: BoxFit.cover,
-                    height: 300,
                   ),
                 ),
-                const SizedBox(width: 4),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Expanded(
+              ),
+              const SizedBox(width: 4),
+              Expanded(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 148,
+                      width: MediaQuery.of(context).size.width / 2 - 2,
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(20),
+                        ),
                         child: Image.asset(
                           imageUrls[1],
                           fit: BoxFit.cover,
-                          height: 150,
                         ),
                       ),
-                      const SizedBox(height: 4),
-                      Expanded(
+                    ),
+                    const SizedBox(height: 4),
+                    SizedBox(
+                      height: 148,
+                      width: MediaQuery.of(context).size.width / 2 - 2,
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          bottomRight: Radius.circular(20),
+                        ),
                         child: Image.asset(
                           imageUrls[2],
                           fit: BoxFit.cover,
-                          height: 150,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ));
+              ),
+            ],
+          ),
+        ),
+      );
     }
   }
 }
