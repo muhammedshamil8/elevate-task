@@ -30,7 +30,7 @@ class PostCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Header location
-      
+
           // Condition-based type UI
           if (type == 'Guide')
             _buildGuideUI(
@@ -39,8 +39,6 @@ class PostCard extends StatelessWidget {
             _buildPostUI(imageUrls, description, username, location, time)
           else
             _buildDefaultUI(imageUrls, description),
-
-
         ],
       ),
     );
@@ -212,74 +210,82 @@ class PostCard extends StatelessWidget {
         _buildImageLayout(imageUrls),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          child: Column(
             children: [
-              const CircleAvatar(
-                radius: 18,
-                backgroundImage: AssetImage('assets/images/user.png'),
-              ),
-              const SizedBox(width: 8),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  const CircleAvatar(
+                    radius: 18,
+                    backgroundImage: AssetImage('assets/images/user.png'),
+                  ),
+                  const SizedBox(width: 8),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Text('Faizy Faz',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16)),
-                          Text('$time',
-                              style: const TextStyle(
-                                  color: Colors.grey, fontSize: 10)),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Faizy Faz',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16)),
+                              Text('$time',
+                                  style: const TextStyle(
+                                      color: Colors.grey, fontSize: 10)),
+                            ],
+                          ),
+                          const SizedBox(width: 8),
+                          OutlinedButton(
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              minimumSize: const Size(5, 25),
+                              side: const BorderSide(
+                                  color: Colors.green, width: 2),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 0), // Adjust padding
+                            ),
+                            child: const Text('Follow',
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.green)),
+                          )
                         ],
                       ),
-                      const SizedBox(width: 8),
-                      OutlinedButton(
-                        onPressed: () {},
-                        style: OutlinedButton.styleFrom(
-                          minimumSize: const Size(5, 25),
-                          side: const BorderSide(color: Colors.green, width: 2),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 0), // Adjust padding
-                        ),
-                        child: const Text('Follow',
-                            style:
-                                TextStyle(fontSize: 10, color: Colors.green)),
-                      )
                     ],
+                  ),
+                  const Spacer(),
+                  const Icon(
+                    Icons.favorite_border,
+                    color: Colors.red,
+                  ),
+                  const Text('112'),
+                  const SizedBox(width: 8),
+                  const Icon(
+                    Icons.comment_bank_outlined,
+                    color: Colors.green,
+                  ),
+                  const Text('4'),
+                ],
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(description),
                   ),
                 ],
               ),
-              const Spacer(),
-              const Icon(
-                Icons.favorite_border,
-                color: Colors.red,
-              ),
-              const Text('112'),
-              const SizedBox(width: 8),
-              const Icon(
-                Icons.comment_bank_outlined,
-                color: Colors.green,
-              ),
-              const Text('4'),
             ],
           ),
         ),
-        Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(description),
-            ),
-          ],
-        ),
+
         const Divider(thickness: 1, color: Color.fromARGB(255, 236, 234, 234))
       ],
     );
